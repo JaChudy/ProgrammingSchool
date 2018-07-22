@@ -1,9 +1,11 @@
 package pl.coderslab.controller;
 
+import jdk.nashorn.internal.runtime.Source;
 import jdk.nashorn.internal.runtime.regexp.joni.ScanEnvironment;
 import pl.coderslab.entity.UserGroup;
 import pl.coderslab.service.UserGropuService;
 
+import java.net.Socket;
 import java.util.Scanner;
 
 public class UserGroupController {
@@ -34,6 +36,7 @@ public class UserGroupController {
             System.out.println(e.getMessage());
             addGroup();
         }
+        MainController.startMainMenu();
        // return userGroup1.getName();
 
         //Call to UserGroupService to method to add user group
@@ -41,24 +44,42 @@ public class UserGroupController {
     }
 
     static private void editGroup(){
-        //printAll();
-        Scanner scan  = new Scanner(System.in);
-        System.out.println("Which group name do you want to edit?\n " +
-                "Enter the group number");
-        while (!scan.hasNextInt()){
-            System.out.println("To nie jest liczba całkowita");
-            editGroup();
-        }
-            int userGroupId = scan.nextInt();
-            scan.nextLine();
-            System.out.println("Podaj nową zawę grupy");
-            String newGroupName = scan.nextLine();
-            UserGropuService.edit(userGroupId, newGroupName);
+            printAll();
+            Scanner scan  = new Scanner(System.in);
+            System.out.println("Which group name do you want to edit?\n " +
+                    "Enter the group number:");
+            while (!scan.hasNextInt()){
+                System.out.println("Incorrect value. Please, enter the natural number");
+                editGroup();
+            }
+                int userGroupId = scan.nextInt();
+                scan.nextLine();
+                System.out.println("Enter a new group name");
+                String newGroupName = scan.nextLine();
+                try {
+                    UserGropuService.edit(userGroupId, newGroupName);
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                    editGroup();
+                }
+        System.out.println("Done");
+                MainController.startMainMenu();
 
 
     }
 
     static private void deleteGroup(){
+        printAll();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Which group name do yo want delete? \n" +
+                "Enter the group number:");
+        while (!scan.hasNextInt()){
+            scan.next();
+            System.out.println("");
+        }
+        int deleteGroupId = scan.nextInt();
+        UserGropuService.delete(deleteGroupId);
+        MainController.startMainMenu();
 
     }
 
@@ -69,7 +90,7 @@ public class UserGroupController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        startManagingUsers();
+        //startManagingUsers();
     }
 
     private static int choseAction(){

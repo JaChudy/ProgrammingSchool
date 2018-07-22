@@ -1,5 +1,6 @@
 package pl.coderslab.dao;
 
+import pl.coderslab.controller.MainController;
 import pl.coderslab.controller.UserGroupController;
 import pl.coderslab.entity.UserGroup;
 import pl.coderslab.service.DbService;
@@ -32,9 +33,24 @@ public class UserGroupDao {
 
     }
 
+    public static void delete(int groupId){
+        String querry = "Delete from user_group where id = ?";
+        List<String> params = new ArrayList<>();
+        params.add(String.valueOf(groupId));
+        try {
+            DbService.executeQuery(querry,params,"ProgrammingSchool");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
-    public static void edit(int groupId, String newName){
+    public static void edit(int groupId, String newName) throws Exception{
+        if(findByName(newName)!=null){
+            throw new Exception("A group with this name already exist");
+        }
+
         String querry = "UPDATE user_group SET name = ? Where id = ? ";
         List<String> params = new ArrayList<>();
         params.add(newName);
@@ -45,6 +61,7 @@ public class UserGroupDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
 
 
     }

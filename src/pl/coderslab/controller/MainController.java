@@ -14,7 +14,7 @@ public class MainController {
     public static void startMainMenu() {
 
         System.out.println("=================================");
-        System.out.println("=====WELCOME TO OUT SCHOOL=======");
+        System.out.println("=====WELCOME TO OUR SCHOOL=======");
         System.out.println("=================================");
         System.out.println("=================================");
         System.out.println("====TRY NOT TO FAIL EXAMS :D ====");
@@ -34,6 +34,9 @@ public class MainController {
             case 4:
                 System.out.println("Option 4");
                 break;
+            case 5:
+                System.out.println("Thank you. Bye ;D");
+                break;
         }
     }
 
@@ -46,10 +49,11 @@ public class MainController {
             System.out.println("2 - Manage user group");
             System.out.println("3 - Manage questions");
             System.out.println("4 - Take exam");
+            System.out.println("5 - Exit");
 
             try {
                 int option = scan.nextInt();
-                if (option < 1 || option > 4) {
+                if (option < 1 || option > 5) {
                     throw new Exception("Wrong value");
                 }
                 return option;

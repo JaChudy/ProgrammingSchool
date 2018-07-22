@@ -12,14 +12,21 @@ public class UserGropuService {
         UserGroup newUserGroup = new UserGroup();
         newUserGroup.setName(newGroupName);
         if(newUserGroup.getName().length() < 4){
-           throw  new Exception("Nazwa grupy musi być dłuższa niż 3 znaki");
+           throw  new Exception("Group name must be at lest 4 characters long");
         }
         UserGroupDao.save(newUserGroup);
 
     }
 
-    public static void edit(int groupId, String newGroupName){
+    public static void edit(int groupId, String newGroupName) throws  Exception{
+        if(newGroupName.length()<4){
+            throw  new Exception("Group name must be at lest 4 characters long");
+        }
         UserGroupDao.edit(groupId, newGroupName);
+    }
+
+    public static void delete(int groupId){
+        UserGroupDao.delete(groupId);
     }
 
     public static void printAll() throws Exception{
