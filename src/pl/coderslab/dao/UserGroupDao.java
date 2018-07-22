@@ -6,6 +6,7 @@ import pl.coderslab.service.DbService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UserGroupDao {
@@ -31,6 +32,23 @@ public class UserGroupDao {
 
     }
 
+
+
+    public static void edit(int groupId, String newName){
+        String querry = "UPDATE user_group SET name = ? Where id = ? ";
+        List<String> params = new ArrayList<>();
+        params.add(newName);
+        params.add(String.valueOf(groupId));
+
+        try {
+            DbService.executeQuery(querry, params,"ProgrammingSchool");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     public static void save(UserGroup userGroup) throws Exception{
 
         if(findByName(userGroup.getName()) != null)
@@ -51,6 +69,21 @@ public class UserGroupDao {
         }
 
     }
+
+    public static void printAllFromTable() throws Exception{
+        String querry = "SELECT * from user_group";
+        List<String> params = new ArrayList<>();
+        //params.add("user_group");
+        try {
+            List<String[]> results = DbService.getData(querry, params, "ProgrammingSchool");
+            for(String[] result : results){
+                System.out.println(Arrays.toString(result));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 
 //    public List<UserGroup> findAll(){
 //

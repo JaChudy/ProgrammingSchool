@@ -17,4 +17,12 @@ public class UserGropuService {
         UserGroupDao.save(newUserGroup);
 
     }
+
+    public static void edit(int groupId, String newGroupName){
+        UserGroupDao.edit(groupId, newGroupName);
+    }
+
+    public static void printAll() throws Exception{
+        UserGroupDao.printAllFromTable();
+    }
 }

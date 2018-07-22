@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import jdk.nashorn.internal.runtime.regexp.joni.ScanEnvironment;
 import pl.coderslab.entity.UserGroup;
 import pl.coderslab.service.UserGropuService;
 
@@ -40,6 +41,20 @@ public class UserGroupController {
     }
 
     static private void editGroup(){
+        //printAll();
+        Scanner scan  = new Scanner(System.in);
+        System.out.println("Which group name do you want to edit?\n " +
+                "Enter the group number");
+        while (!scan.hasNextInt()){
+            System.out.println("To nie jest liczba całkowita");
+            editGroup();
+        }
+            int userGroupId = scan.nextInt();
+            scan.nextLine();
+            System.out.println("Podaj nową zawę grupy");
+            String newGroupName = scan.nextLine();
+            UserGropuService.edit(userGroupId, newGroupName);
+
 
     }
 
@@ -49,7 +64,11 @@ public class UserGroupController {
 
     private static void printAll(){
         System.out.println("Print all user groups");
-
+        try {
+            UserGropuService.printAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         startManagingUsers();
     }
 
